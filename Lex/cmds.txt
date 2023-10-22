@@ -1,0 +1,5 @@
+flex muscle.lex
+
+gcc lex.yy.c -o exe
+
+./exe < sursa.cpp > out.txt

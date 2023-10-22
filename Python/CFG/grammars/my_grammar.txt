@@ -1,0 +1,95 @@
+program	:	INCLUDE	'<' IOSTREAM '>'
+			USING NAMESPACE STD SC
+			lista_definire_tipuri
+			INT MAIN '(' ')' '{'
+				program_principal
+				RETURN CONST SC
+			'}'
+		;
+		
+lista_definire_tipuri	:	 
+						| 	definire_tip SC
+							lista_definire_tipuri
+						;
+
+definire_tip	: 	tip_definit '{' 
+					lista_declarari_in_struct
+					'}'
+				;
+
+tip_definit	:	STRUCT ID
+			;
+			
+lista_declarari_in_struct	:	
+							|	declarare_in_struct SC 
+								lista_declarari_in_struct
+							;
+							
+declarare_in_struct	:	tip_primitiv ID
+					;
+						
+tip_primitiv	:	BOOL 
+				| 	DOUBLE 
+				| 	INT
+				;
+
+program_principal	: 	lista_declarari
+						lista_instructiuni
+					;
+				
+lista_declarari	:	
+				|	declarare SC
+					lista_declarari
+				;
+
+declarare	:	tip ID
+			;
+
+tip	:	tip_definit 
+	| 	tip_primitiv
+	;
+
+lista_instructiuni	:	
+					|	instructiune SC 
+						lista_instructiuni
+					;
+
+instructiune	:	afisare 
+				| 	atribuire 
+				| 	citire 
+				| 	conditionala_if 
+				| 	ciclare_while
+				;
+
+afisare	:	COUT LTLT evaluabil_atomic
+		;
+
+atribuire	:	ID '=' evaluabil
+			;
+
+evaluabil	:	evaluabil_atomic 
+			| 	operator_unar evaluabil_atomic 
+			| 	evaluabil_atomic operator_binar evaluabil_atomic
+			;
+
+evaluabil_atomic	:	CONST 
+					| 	ID
+					;
+
+operator_unar	:	'+' | '-' | '!'
+				;
+
+operator_binar	:	'+' | '-' | '*' | '/' | '%' | AND | OR | '<' | '>' | NE | EQ
+				;
+				
+citire	:	CIN GTGT ID
+		;
+	
+conditionala_if	:	IF '(' ID ')' '{' 
+					lista_instructiuni 
+					'}'
+				;
+ciclare_while	:	WHILE '(' ID ')' '{'
+					lista_instructiuni 
+					'}'
+				;

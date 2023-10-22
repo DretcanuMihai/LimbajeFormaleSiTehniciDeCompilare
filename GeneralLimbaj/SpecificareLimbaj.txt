@@ -1,0 +1,82 @@
+<program>	-> 	"#include" "<" " iostream" ">"
+				"using" "namespace" "std" ";"
+				<lista_definire_tipuri>
+				"int" "main" "(" ")" "{"
+					<program_principal>
+					"return" CONST ";"
+				"}"
+				
+<lista_definire_tipuri> -> 	Epsilon
+<lista_definire_tipuri> -> 	<definire_tip> ";" 
+							<lista_definire_tipuri>
+
+<definire_tip> 	-> 	<tip_definit> "{"
+						<lista_declarari_in_struct>
+					"}"
+					
+<tip_definit>	->	"struct" ID
+					
+<lista_declarari_in_struct> 	-> 	Epsilon
+<lista_declarari_in_struct> 	-> 	<declarare_in_struct> ";" 
+									<lista_declarari_in_struct>
+
+<declarare_in_struct> 	-> 	<tip_primitiv> ID
+
+<tip_primitiv> 	-> 	bool
+<tip_primitiv> 	-> 	double
+<tip_primitiv> 	-> 	int
+
+<program_principal> -> 	<lista_declarari>
+						<lista_instructiuni>
+					   
+<lista_declarari> 	-> 	Epsilon
+<lista_declarari> 	-> 	<declarare> ";" 
+						<lista_declarari>
+						
+<declarare> -> 	<tip> ID
+
+<tip> 	-> 	<tip_definit>
+<tip>	->	<tip_primitiv>
+					   
+<lista_instructiuni>	-> 	Epsilon
+<lista_instructiuni>	-> 	<instructiune> ";"
+							<lista_instructiuni>
+
+<instructiune>	-> 	<afisare>
+<instructiune>	-> 	<atribuire>
+<instructiune>	-> 	<citire>
+<instructiune>	-> 	<conditionala_if>
+<instructiune>	-> 	<ciclare_while>
+
+<afisare>	-> 	"cout" "<<" <evaluabil_atomic>
+
+<atribuire>	-> 	ID "=" <evaluabil>
+
+<evaluabil> -> 	<evaluabil_atomic>
+<evaluabil> -> 	<operator_unar> <evaluabil_atomic>
+<evaluabil> -> 	<evaluabil_atomic> <operator_binar> <evaluabil_atomic>
+
+<evaluabil_atomic> -> 	ID
+<evaluabil_atomic> -> 	CONST
+
+<operator_unar>	->	"+" | "-" | "!"
+
+<operator_binar> 	-> 	"+" | "-" | "*" | "/" | "%" | "&&" | "||" | "<" | ">" | "!=" | "=="
+
+<citire>	-> 	"cin" ">>" ID
+
+<conditionala_if> -> 	"if" "(" ID ")" "{"
+						<lista_instructiuni>
+						"}"
+					
+					
+<ciclare_while> -> 	"while" "(" ID ")" "{"
+						<lista_instructiuni>
+						"}"
+					
+ID	-> 	"[a-zA-Z]+([.][a-zA-Z]+)?"
+
+CONST	-> 	<const_bool>
+CONST	->	<const_double>
+CONST	-> 	<const_int>
+CONST	->	<const_string>

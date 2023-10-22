@@ -1,0 +1,7 @@
+bison -d muscle.y
+
+flex muscle.l
+
+gcc lex.yy.c muscle.tab.c -o exe
+
+./exe < in > out

@@ -1,0 +1,37 @@
+<separator-pipe>    ->  |<lista-linii-noi>
+
+<separator-sc> ->  ;<lista-linii-noi>
+
+<lista-linii-noi>   ->  Epsilon
+<lista-linii-noi>   ->  "\n"<lista-linii-noi>
+
+<fisier>	->	<declarare-alfabet><lista-linii-noi>
+				<declarare-stari><lista-linii-noi>
+				<declarare-stare-initiala><lista-linii-noi>
+				<declarare-stari-finale><lista-linii-noi>
+				<declarare-tranzitii>
+
+<declarare-alfabet> ->  <element-alfabet>
+<declarare-alfabet> ->  <element-alfabet><separator-sc><declarare-alfabet>
+
+<element-alfabet>   ->  <caracter>|nl|sc|pipe
+
+<caracter>	-> a|b|...|z|A|B|...|0|1|...|9|_
+
+<declarare-stari>	->	ID
+<declarare-stari>	->	ID<separator-sc><declarare-stari>
+
+
+<declarare-stare-initiala>  ->  ID
+
+<declarare-stari-finale>	->	<declarare-stari>
+
+<declarare-tranzitii>	->	<declarare-tranzitie>
+<declarare-tranzitii>	->	<declarare-tranzitie><lista-linii-noi>
+							<declarare-tranzitii>
+
+<declarare-tranzitie>   ->  <declarare-stari><separator-pipe><declarare-alfabet><separator-pipe><declarare-stari>
+
+
+ID	->	<caracter>
+ID	->	<caracter>|ID

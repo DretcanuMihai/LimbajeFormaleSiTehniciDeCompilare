@@ -1,0 +1,11 @@
+start	:	A B C
+		;
+A   :   A a
+    |
+    ;
+B   :   b B
+    |
+    ;
+C   :   c C
+    |
+    ;
